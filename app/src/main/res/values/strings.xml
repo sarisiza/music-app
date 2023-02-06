@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Music App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_text_artist_name">Artist name</string>
+    <string name="tv_text_song_name">Song Name</string>
+    <string name="tv_text_song_price">20.2</string>
+    <string name="iv_description_song_picture">Song Picture</string>
+    <string name="tv_text_album_name">Album name</string>
+    <string name="tv_text_release_date">Release Date</string>
+    <string name="btn_title_rock">Rock</string>
+    <string name="btn_title_classic">Classic</string>
+    <string name="btn_title_pop">Pop</string>
 </resources>
