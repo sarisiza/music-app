@@ -8,4 +8,7 @@
     <string name="iv_description_song_picture">Song Picture</string>
     <string name="tv_text_album_name">Album name</string>
     <string name="tv_text_release_date">Release Date</string>
+    <string name="btn_title_rock">Rock</string>
+    <string name="btn_title_classic">Classic</string>
+    <string name="btn_title_pop">Pop</string>
 </resources>
