@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface MusicApi {
 
     @GET(SEARCH)
-    suspend fun getSongs(
+    suspend fun getSongsList(
         @Query("term") genre: String
     ): Response<MusicResponse>
 
