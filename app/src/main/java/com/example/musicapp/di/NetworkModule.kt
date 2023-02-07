@@ -19,12 +19,18 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
+    /**
+     * Method to provide Moshi
+     */
     @Provides
     fun providesMoshi(): Moshi =
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
+    /**
+     * Method to provide Retrofit
+     */
     @Provides
     fun providesRetrofit(
         okHttpClient: OkHttpClient,
@@ -37,6 +43,9 @@ class NetworkModule {
             .build()
     }
 
+    /**
+     * Method to provide OkHttpClient
+     */
     @Provides
     fun providesOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
@@ -49,6 +58,9 @@ class NetworkModule {
             .build()
     }
 
+    /**
+     * Method to provide HttpLoggingInterceptor
+     */
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor{
         return HttpLoggingInterceptor().apply {
@@ -56,11 +68,17 @@ class NetworkModule {
         }
     }
 
+    /**
+     * Method to provide Music Servies
+     */
     @Provides
     fun providesMusicServices(retrofit: Retrofit): MusicApi{
         return retrofit.create(MusicApi::class.java)
     }
 
+    /**
+     * Method to provide IO Dispatcher
+     */
     @Provides
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
