@@ -7,13 +7,14 @@ import retrofit2.http.Query
 
 interface MusicApi {
 
-    @GET("search")
+    @GET(SEARCH)
     suspend fun getSongs(
         @Query("term") genre: String
-    ): Response<List<MusicResponse>>
+    ): Response<MusicResponse>
 
     companion object{
         const val BASE_URL = "https://itunes.apple.com/"
+        const val SEARCH = "search"
     }
 
 }
