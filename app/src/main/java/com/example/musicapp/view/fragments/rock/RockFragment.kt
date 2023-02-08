@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.musicapp.R
+import com.example.musicapp.databinding.FragmentRockBinding
+import com.example.musicapp.utils.BaseFragment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RockFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RockFragment : Fragment() {
+class RockFragment : BaseFragment() {
+
+    private val binding by lazy {
+        FragmentRockBinding.inflate(layoutInflater)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rock, container, false)
+        return binding.root
     }
 
 }

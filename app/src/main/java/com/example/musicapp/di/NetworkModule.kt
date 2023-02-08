@@ -69,16 +69,13 @@ class NetworkModule {
     }
 
     /**
-     * Method to provide Music Servies
+     * Method to provide Music Servcies
      */
     @Provides
     fun providesMusicServices(retrofit: Retrofit): MusicApi{
         return retrofit.create(MusicApi::class.java)
     }
 
-    /**
-     * Method to provide IO Dispatcher
-     */
     @Provides
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 

@@ -1,5 +1,6 @@
 package com.example.musicapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "MusicViewModel"
 @HiltViewModel
 class MusicViewModel @Inject constructor(
     private val musicRepository: MusicRepository,
@@ -33,6 +35,8 @@ class MusicViewModel @Inject constructor(
 
     init {
         getSongs("rock")
+        getSongs("pop")
+        getSongs("classick")
     }
 
     fun getSongs(genre: String){
@@ -41,16 +45,19 @@ class MusicViewModel @Inject constructor(
                 "rock" -> {
                     musicRepository.getAllSongs(genre).collect{
                         _rockMusic.postValue(it)
+                        Log.d(TAG, "Rock: $it")
                     }
                 }
                 "pop" -> {
                     musicRepository.getAllSongs(genre).collect{
                         _popMusic.postValue(it)
+                        Log.d(TAG, "pop: $it")
                     }
                 }
                 "classick" -> {
                     musicRepository.getAllSongs(genre).collect{
                         _classicMusic.postValue(it)
+                        Log.d(TAG, "Classic: $it")
                     }
                 }
                 else -> throw IncorrectQuery()
