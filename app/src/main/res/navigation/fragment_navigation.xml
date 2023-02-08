@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/rock_list"
         android:name="com.example.musicapp.view.fragments.rock.RockFragment"
-        tools:layout="@layout/fragment_rock"
+        tools:layout="@layout/fragment_songs_list"
         android:label="Music List">
 
         <action

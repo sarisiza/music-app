@@ -1,4 +1,4 @@
-package com.example.musicapp.view.fragments.rock
+package com.example.musicapp.view.fragments.pop
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.example.musicapp.databinding.FragmentSongsListBinding
 import com.example.musicapp.utils.BaseFragment
 
-class RockFragment : BaseFragment() {
+class PopFragment: BaseFragment() {
 
     private val binding by lazy {
         FragmentSongsListBinding.inflate(layoutInflater)
