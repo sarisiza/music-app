@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.rest.MusicRepository
+import com.example.musicapp.utils.IncorrectQuery
 import com.example.musicapp.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +37,24 @@ class MusicViewModel @Inject constructor(
 
     fun getSongs(genre: String){
         viewModelScope.launch(ioDispatcher){
-            //todo get songs
+            when(genre){
+                "rock" -> {
+                    musicRepository.getAllSongs(genre).collect{
+                        _rockMusic.postValue(it)
+                    }
+                }
+                "pop" -> {
+                    musicRepository.getAllSongs(genre).collect{
+                        _popMusic.postValue(it)
+                    }
+                }
+                "classick" -> {
+                    musicRepository.getAllSongs(genre).collect{
+                        _classicMusic.postValue(it)
+                    }
+                }
+                else -> throw IncorrectQuery()
+            }
         }
     }
 

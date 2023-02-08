@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_navigation"
-    app:startDestination="@id/music_list">
+    app:startDestination="@id/rock_list">
 
     <fragment
-        android:id="@+id/music_list"
-        android:name="com.example.musicapp.view.fragments.MainFragment"
-        tools:layout="@layout/fragment_main"
+        android:id="@+id/rock_list"
+        android:name="com.example.musicapp.view.fragments.rock.RockFragment"
+        tools:layout="@layout/fragment_rock"
         android:label="Music List">
 
         <action
