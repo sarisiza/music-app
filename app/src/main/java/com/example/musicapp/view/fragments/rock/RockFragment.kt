@@ -41,7 +41,7 @@ class RockFragment : BaseFragment() {
             when(it){
                 is UIState.LOADING -> {}
                 is UIState.SUCCESS -> {
-                    songsAdapter.updateArtistsSongsList(it.response.songItems)
+                    songsAdapter.updateArtistsSongsList(it.response)
                 }
                 is UIState.ERROR -> {
                     showError(it.error.localizedMessage){
