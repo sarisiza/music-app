@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapp.R
 import com.example.musicapp.databinding.SongViewBinding
 import com.example.musicapp.model.SongItem
+import com.example.musicapp.model.domain.Song
 import com.squareup.picasso.Picasso
 
 class SongsListAdapter(
-    private val songsList: MutableList<SongItem> = mutableListOf(),
+    private val songsList: MutableList<Song> = mutableListOf(),
     private val onClickedSong: (Int) -> Unit
 ): RecyclerView.Adapter<SongsListViewHolder>() {
 
-    fun updateSongs(newSongs: List<SongItem>){
+    fun updateSongs(newSongs: List<Song>){
         if(songsList != newSongs){
             songsList.addAll(newSongs)
         }
@@ -40,7 +41,7 @@ class SongsListAdapter(
 
 class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.ViewHolder(binding.root){
 
-    fun songsBinding(song: SongItem, onClickedSong: (Int) -> Unit){
+    fun songsBinding(song: Song, onClickedSong: (Int) -> Unit){
         binding.tvSongName.text = song.trackName
         binding.tvArtistName.text = song.artistName
         binding.tvSongPrice.text = song.trackPrice.toString()

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapp.databinding.ArtistNameViewBinding
 import com.example.musicapp.databinding.SongsListHolderBinding
 import com.example.musicapp.model.SongItem
+import com.example.musicapp.model.domain.Song
 import com.example.musicapp.utils.ViewType
 
 class ArtistsSongsAdapter(
@@ -14,9 +15,9 @@ class ArtistsSongsAdapter(
     private val onClickedSong: (Int) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun updateArtistsSongsList(newArtistsSongsList: List<SongItem>){
+    fun updateArtistsSongsList(newArtistsSongsList: List<Song>){
         var tempArtist = "+"
-        val songsListTemp: MutableList<SongItem> = mutableListOf()
+        val songsListTemp: MutableList<Song> = mutableListOf()
         val songsAdapterList: MutableList<SongsListAdapter> = mutableListOf()
         var i = 0
         newArtistsSongsList.sortedBy { it.artistName }.forEach {song ->
