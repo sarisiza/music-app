@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicapp.databinding.FragmentSongsListBinding
 import com.example.musicapp.utils.BaseFragment
+import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.UIState
 import com.example.musicapp.view.adapters.ArtistsSongsAdapter
 
@@ -44,7 +45,7 @@ class RockFragment : BaseFragment() {
                 }
                 is UIState.ERROR -> {
                     showError(it.error.localizedMessage){
-                        musicViewModel.getSongs("rock")
+                        musicViewModel.getSongs(Genres.ROCK)
                     }
                 }
             }
