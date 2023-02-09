@@ -2,17 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/btn_rock"
+        android:enabled="true"
+        android:id="@+id/menu_rock"
         android:title="@string/btn_title_rock"
         android:icon="@drawable/ic_rock_24"/>
 
     <item
-        android:id="@+id/btn_classic"
+        android:enabled="true"
+        android:id="@+id/menu_classic"
         android:title="@string/btn_title_classic"
         android:icon="@drawable/ic_classic_24"/>
 
     <item
-        android:id="@+id/btn_pop"
+        android:enabled="true"
+        android:id="@+id/menu_pop"
         android:title="@string/btn_title_pop"
         android:icon="@drawable/ic_pop_24"/>
 
