@@ -10,5 +10,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class MusicResponse(
     @Json(name = "results")
-    val songItems: List<SongItem?>? = null
+    val songItems: List<SongItem> = listOf()
 )

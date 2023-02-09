@@ -1,4 +1,4 @@
-package com.example.musicapp.view.fragments.rock
+package com.example.musicapp.view.fragments.classic
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.UIState
 import com.example.musicapp.view.adapters.ArtistsSongsAdapter
 
-class RockFragment : BaseFragment() {
+class ClassicFragment: BaseFragment() {
 
     private val binding by lazy {
         FragmentSongsListBinding.inflate(layoutInflater)
@@ -37,7 +37,7 @@ class RockFragment : BaseFragment() {
             adapter = songsAdapter
         }
 
-        musicViewModel.rockMusic.observe(viewLifecycleOwner){
+        musicViewModel.classicMusic.observe(viewLifecycleOwner){
             when(it){
                 is UIState.LOADING -> {}
                 is UIState.SUCCESS -> {
@@ -45,7 +45,7 @@ class RockFragment : BaseFragment() {
                 }
                 is UIState.ERROR -> {
                     showError(it.error.localizedMessage){
-                        musicViewModel.getSongs(Genres.ROCK)
+                        musicViewModel.getSongs(Genres.CLASSIC)
                     }
                 }
             }
