@@ -9,7 +9,29 @@
         android:id="@+id/rock_list"
         android:name="com.example.musicapp.view.fragments.rock.RockFragment"
         tools:layout="@layout/fragment_songs_list"
-        android:label="Music List">
+        android:label="Rock List">
+
+        <action
+            android:id="@+id/action_music_list_to_song_details"
+            app:destination="@id/song_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/classic_list"
+        android:name="com.example.musicapp.view.fragments.classic.ClassicFragment"
+        tools:layout="@layout/fragment_songs_list"
+        android:label="Classic List">
+
+        <action
+            android:id="@+id/action_music_list_to_song_details"
+            app:destination="@id/song_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pop_list"
+        android:name="com.example.musicapp.view.fragments.pop.PopFragment"
+        tools:layout="@layout/fragment_songs_list"
+        android:label="Pop List">
 
         <action
             android:id="@+id/action_music_list_to_song_details"
