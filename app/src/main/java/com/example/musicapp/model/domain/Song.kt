@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.musicapp.model.SongItem
+import java.lang.Math.random
 
 @Entity
 data class Song(
@@ -24,7 +25,7 @@ data class Song(
 
 fun SongItem?.mapToSong(): Song =
     Song(
-        trackId = this?.trackId ?: 0,
+        trackId = this?.trackId ?: random().toInt(),
         trackName = this?.trackName ?: "",
         artistName = this?.artistName ?: "",
         artworkUrl60 = this?.artworkUrl60 ?: "",
