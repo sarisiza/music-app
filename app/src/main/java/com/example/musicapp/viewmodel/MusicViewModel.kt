@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicapp.rest.MusicRepository
+import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.IncorrectQuery
 import com.example.musicapp.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,33 +35,29 @@ class MusicViewModel @Inject constructor(
     val popMusic: LiveData<UIState> get() = _popMusic
 
     init {
-        getSongs("rock")
-        getSongs("pop")
-        getSongs("classick")
+        getSongs(Genres.ROCK)
+        getSongs(Genres.POP)
+        getSongs(Genres.CLASSIC)
     }
 
-    fun getSongs(genre: String){
+    fun getSongs(genre: Genres){
         viewModelScope.launch(ioDispatcher){
             when(genre){
-                "rock" -> {
+                Genres.ROCK -> {
                     musicRepository.getAllSongs(genre).collect{
                         _rockMusic.postValue(it)
-                        Log.d(TAG, "Rock: $it")
                     }
                 }
-                "pop" -> {
+                Genres.POP -> {
                     musicRepository.getAllSongs(genre).collect{
                         _popMusic.postValue(it)
-                        Log.d(TAG, "pop: $it")
                     }
                 }
-                "classick" -> {
+                Genres.CLASSIC -> {
                     musicRepository.getAllSongs(genre).collect{
                         _classicMusic.postValue(it)
-                        Log.d(TAG, "Classic: $it")
                     }
                 }
-                else -> throw IncorrectQuery()
             }
         }
     }
