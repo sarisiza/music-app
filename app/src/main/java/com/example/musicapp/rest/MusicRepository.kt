@@ -1,6 +1,7 @@
 package com.example.musicapp.rest
 
 import com.example.musicapp.utils.FailureResponse
+import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.NullSongsResponse
 import com.example.musicapp.utils.UIState
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +13,7 @@ interface MusicRepository {
     /**
      * Function to get all songs
      */
-    fun getAllSongs(genre: String): Flow<UIState>
+    fun getAllSongs(genre: Genres): Flow<UIState>
 
 }
 
@@ -23,10 +24,10 @@ class MusicRepositoryImpl @Inject constructor(
     /**
      * Method to retrieve songs from the API
      */
-    override fun getAllSongs(genre: String): Flow<UIState> = flow {
+    override fun getAllSongs(genre: Genres): Flow<UIState> = flow {
         emit(UIState.LOADING)
         try{
-            val response = musicApi.getSongsList(genre)
+            val response = musicApi.getSongsList(genre.genre)
             if(response.isSuccessful){
                 response.body()?.let {
                     emit(UIState.SUCCESS(it))

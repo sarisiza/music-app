@@ -10,7 +10,7 @@ import com.example.musicapp.model.SongItem
 import com.example.musicapp.utils.ViewType
 
 class ArtistsSongsAdapter(
-    private val artistsSongsList: MutableList<ViewType>,
+    private val artistsSongsList: MutableList<ViewType> = mutableListOf(),
     private val onClickedSong: (Int) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

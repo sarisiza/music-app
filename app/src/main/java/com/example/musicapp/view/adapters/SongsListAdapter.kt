@@ -3,6 +3,7 @@ package com.example.musicapp.view.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicapp.R
 import com.example.musicapp.databinding.SongViewBinding
 import com.example.musicapp.model.SongItem
 import com.squareup.picasso.Picasso
@@ -43,7 +44,14 @@ class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.Vi
         binding.tvSongName.text = song.trackName
         binding.tvArtistName.text = song.artistName
         binding.tvSongPrice.text = song.trackPrice.toString()
-        Picasso.get().load(song.artworkUrl60).into(binding.ivSongCover)
+        Picasso
+            .get()
+            .load(song.artworkUrl60)
+            .centerCrop()
+            .resize(700,0)
+            .placeholder(R.drawable.ic_image_search_24)
+            .error(R.drawable.ic_broken_image_24)
+            .into(binding.ivSongCover)
         itemView.setOnClickListener {
             song.trackId?.let(onClickedSong)
         }

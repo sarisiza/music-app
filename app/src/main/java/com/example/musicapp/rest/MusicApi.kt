@@ -1,6 +1,7 @@
 package com.example.musicapp.rest
 
 import com.example.musicapp.model.MusicResponse
+import com.example.musicapp.utils.Genres
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
