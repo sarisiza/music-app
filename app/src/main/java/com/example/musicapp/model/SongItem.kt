@@ -18,12 +18,10 @@ data class SongItem(
     val collectionName: String? = null,
     @Json(name = "previewUrl")
     val previewUrl: String? = null,
-    @Json(name = "primaryGenreName")
-    val primaryGenreName: String? = null,
     @Json(name = "releaseDate")
     val releaseDate: String? = null,
     @Json(name = "trackId")
-    val trackId: Int? = null,
+    val trackId: Int,
     @Json(name = "trackName")
     val trackName: String? = null,
     @Json(name = "trackPrice")
