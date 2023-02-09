@@ -21,7 +21,7 @@ data class SongItem(
     @Json(name = "releaseDate")
     val releaseDate: String? = null,
     @Json(name = "trackId")
-    val trackId: Int,
+    val trackId: Int? = null,
     @Json(name = "trackName")
     val trackName: String? = null,
     @Json(name = "trackPrice")

@@ -3,19 +3,19 @@
 
     <item
         android:enabled="true"
-        android:id="@+id/menu_rock"
+        android:id="@+id/rock_list"
         android:title="@string/btn_title_rock"
         android:icon="@drawable/ic_rock_24"/>
 
     <item
         android:enabled="true"
-        android:id="@+id/menu_classic"
+        android:id="@+id/classic_list"
         android:title="@string/btn_title_classic"
         android:icon="@drawable/ic_classic_24"/>
 
     <item
         android:enabled="true"
-        android:id="@+id/menu_pop"
+        android:id="@+id/pop_list"
         android:title="@string/btn_title_pop"
         android:icon="@drawable/ic_pop_24"/>
 
