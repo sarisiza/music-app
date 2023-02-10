@@ -17,11 +17,6 @@ class PopFragment: BaseFragment() {
         FragmentSongsListBinding.inflate(layoutInflater)
     }
 
-    private val songsAdapter by lazy {
-        ArtistsSongsAdapter{
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

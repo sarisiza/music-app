@@ -34,6 +34,9 @@ class MusicViewModel @Inject constructor(
     private val _popMusic: MutableLiveData<UIState> = MutableLiveData(UIState.LOADING)
     val popMusic: LiveData<UIState> get() = _popMusic
 
+    private val _itemSelected: MutableLiveData<Int> = MutableLiveData(0)
+    val itemSelected: LiveData<Int> get() = _itemSelected
+
     init {
         getSongs(Genres.ROCK)
         getSongs(Genres.POP)
@@ -60,6 +63,10 @@ class MusicViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun selectItem(trackId: Int){
+        _itemSelected.value = trackId
     }
 
 }
