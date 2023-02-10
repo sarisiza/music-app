@@ -19,19 +19,6 @@ open class BaseFragment: Fragment() {
         ViewModelProvider(requireActivity())[MusicViewModel::class.java]
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(!musicViewModel.fragmentState){
-            musicViewModel.getSongs(Genres.ROCK)
-        }
-    }
-
-    protected val songsAdapter by lazy {
-        ArtistsSongsAdapter{
-            musicViewModel.selectItem(it)
-            findNavController().navigate(R.id.action_music_list_to_song_details)
-        }
-    }
 
     protected fun showError(message: String, action: () -> Unit){
         AlertDialog.Builder(requireActivity())

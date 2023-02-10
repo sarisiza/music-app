@@ -19,10 +19,19 @@ class RockFragment : BaseFragment() {
         FragmentSongsListBinding.inflate(layoutInflater)
     }
 
+    private val songsAdapter by lazy {
+        ArtistsSongsAdapter{
+            musicViewModel.selectItem(it)
+            findNavController().navigate(R.id.action_rock_list_to_song_details)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        musicViewModel.updateCurrentTab(Genres.ROCK)
 
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
@@ -49,6 +58,13 @@ class RockFragment : BaseFragment() {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!musicViewModel.fragmentState){
+            musicViewModel.getSongs(Genres.ROCK)
+        }
     }
 
 }

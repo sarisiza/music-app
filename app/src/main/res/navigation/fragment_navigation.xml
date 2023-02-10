@@ -10,9 +10,8 @@
         android:name="com.example.musicapp.view.fragments.rock.RockFragment"
         tools:layout="@layout/fragment_songs_list"
         android:label="Rock List">
-
         <action
-            android:id="@+id/action_music_list_to_song_details"
+            android:id="@+id/action_rock_list_to_song_details"
             app:destination="@id/song_details" />
     </fragment>
 
@@ -21,9 +20,8 @@
         android:name="com.example.musicapp.view.fragments.classic.ClassicFragment"
         tools:layout="@layout/fragment_songs_list"
         android:label="Classic List">
-
         <action
-            android:id="@+id/action_music_list_to_song_details"
+            android:id="@+id/action_classic_list_to_song_details"
             app:destination="@id/song_details" />
     </fragment>
 
@@ -32,9 +30,8 @@
         android:name="com.example.musicapp.view.fragments.pop.PopFragment"
         tools:layout="@layout/fragment_songs_list"
         android:label="Pop List">
-
         <action
-            android:id="@+id/action_music_list_to_song_details"
+            android:id="@+id/action_pop_list_to_song_details"
             app:destination="@id/song_details" />
     </fragment>
 
