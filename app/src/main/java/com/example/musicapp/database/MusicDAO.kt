@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface MusicDAO {
 
     @Query("SELECT * FROM song")
-    suspend fun getSongs(): List<Song>
+    fun getSongs(): List<Song>
 
     @Query("SELECT * FROM song WHERE genre LIKE genreName")
-    suspend fun getSongsByGenre(genreName: String): Flow<List<Song>>
+    fun getSongsByGenre(genreName: String): Flow<List<Song>>
 
     @Insert(
         entity = Song::class,
