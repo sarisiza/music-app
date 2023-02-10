@@ -12,9 +12,6 @@ interface MusicDAO {
     @Query("SELECT * FROM song")
     suspend fun getSongs(): List<Song>
 
-    @Query("SELECT * FROM song WHERE name LIKE: songName LIMIT 1")
-    suspend fun getSongByName(songName: String): Song
-
     @Insert(
         entity = Song::class,
         onConflict = OnConflictStrategy.REPLACE)
