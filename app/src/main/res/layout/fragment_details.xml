@@ -69,4 +69,12 @@
         android:text="@string/tv_text_song_price"
         android:gravity="center"/>
 
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/music_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_song_price"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

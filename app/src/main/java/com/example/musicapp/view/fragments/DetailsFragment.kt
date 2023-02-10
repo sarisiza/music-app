@@ -1,16 +1,16 @@
 package com.example.musicapp.view.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.R
 import com.example.musicapp.databinding.FragmentDetailsBinding
 import com.example.musicapp.model.domain.Song
 import com.example.musicapp.utils.BaseFragment
-import com.example.musicapp.utils.Genres
-import com.example.musicapp.utils.IncorrectQuery
 import com.squareup.picasso.Picasso
 
 
@@ -20,12 +20,20 @@ class DetailsFragment : BaseFragment() {
         FragmentDetailsBinding.inflate(layoutInflater)
     }
 
+    private var player: ExoPlayer? = null
+    private lateinit var currentSong: Song
+
+    private var playWhenReady = true
+    private var currentItem = 0
+    private var playbackPosition = 0L
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val currentSong: Song = musicViewModel.itemSelected.value?:Song()
+        currentSong = musicViewModel.itemSelected.value?:Song()
 
         binding.tvSongName.text = currentSong.trackName
         binding.tvAlbumName.text = currentSong.collectionName
@@ -44,8 +52,40 @@ class DetailsFragment : BaseFragment() {
                 .into(binding.ivSongCover)
         }
 
+        initializePlayer()
+
         // Inflate the layout for this fragment
         return binding.root
     }
+
+    override fun onStop() {
+        super.onStop()
+        releasePlayer()
+    }
+
+    private fun releasePlayer() {
+        player?.let { exoPlayer ->
+            playbackPosition = exoPlayer.currentPosition
+            currentItem = exoPlayer.currentMediaItemIndex
+            playWhenReady = exoPlayer.playWhenReady
+            exoPlayer.release()
+        }
+        player = null
+    }
+
+
+    private fun initializePlayer() {
+        player = ExoPlayer.Builder(requireContext())
+            .build()
+            .also { exoPlayer ->
+                binding.musicView.player = exoPlayer
+                val mediaItem: MediaItem = MediaItem.fromUri(currentSong.previewUrl)
+                exoPlayer.setMediaItem(mediaItem)
+                exoPlayer.playWhenReady = playWhenReady
+                exoPlayer.seekTo(currentItem, playbackPosition)
+                exoPlayer.prepare()
+            }
+    }
+
 
 }
