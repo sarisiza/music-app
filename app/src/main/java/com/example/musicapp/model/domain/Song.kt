@@ -9,18 +9,18 @@ import java.lang.Math.random
 @Entity
 data class Song(
     @PrimaryKey
-    val trackId: Int,
+    val trackId: Int = 0,
     @ColumnInfo("song_name")
-    val trackName: String,
-    val artistName: String,
+    val trackName: String = "",
+    val artistName: String = "",
     @ColumnInfo("image_url")
-    val artworkUrl60: String,
+    val artworkUrl60: String = "",
     @ColumnInfo("album_name")
-    val collectionName: String,
-    val previewUrl: String,
-    val releaseDate: String,
+    val collectionName: String = "",
+    val previewUrl: String = "",
+    val releaseDate: String = "",
     @ColumnInfo("song_price")
-    val trackPrice: Double
+    val trackPrice: Double = 0.0
 )
 
 fun SongItem?.mapToSong(): Song =

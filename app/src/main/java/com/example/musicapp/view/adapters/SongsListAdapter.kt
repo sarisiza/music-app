@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 
 class SongsListAdapter(
     private val songsList: MutableList<Song> = mutableListOf(),
-    private val onClickedSong: (Int) -> Unit
+    private val onClickedSong: (Song) -> Unit
 ): RecyclerView.Adapter<SongsListViewHolder>() {
 
     fun updateSongs(newSongs: List<Song>){
@@ -41,7 +41,7 @@ class SongsListAdapter(
 
 class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.ViewHolder(binding.root){
 
-    fun songsBinding(song: Song, onClickedSong: (Int) -> Unit){
+    fun songsBinding(song: Song, onClickedSong: (Song) -> Unit){
         binding.tvSongName.text = song.trackName
         binding.tvArtistName.text = song.artistName
         binding.tvSongPrice.text = song.trackPrice.toString()
@@ -54,7 +54,7 @@ class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.Vi
             .error(R.drawable.ic_broken_image_24)
             .into(binding.ivSongCover)
         itemView.setOnClickListener {
-            song.trackId?.let(onClickedSong)
+            song.let(onClickedSong)
         }
     }
 

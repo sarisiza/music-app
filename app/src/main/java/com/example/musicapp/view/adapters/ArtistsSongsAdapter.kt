@@ -12,7 +12,7 @@ import com.example.musicapp.utils.ViewType
 
 class ArtistsSongsAdapter(
     private val artistsSongsList: MutableList<ViewType> = mutableListOf(),
-    private val onClickedSong: (Int) -> Unit
+    private val onClickedSong: (Song) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun updateArtistsSongsList(newArtistsSongsList: List<Song>){
