@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.musicapp.R
 import com.example.musicapp.databinding.FragmentSongsListBinding
 import com.example.musicapp.utils.BaseFragment
@@ -31,8 +32,6 @@ class RockFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        musicViewModel.updateCurrentTab(Genres.ROCK)
-
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -56,15 +55,19 @@ class RockFragment : BaseFragment() {
             }
         }
 
+        binding.swipeContainer.setOnRefreshListener {
+            musicViewModel.getSongs(Genres.ROCK)
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
 
-/*    override fun onResume() {
+    override fun onResume() {
         super.onResume()
         if(!musicViewModel.fragmentState){
             musicViewModel.getSongs(Genres.ROCK)
         }
-    }*/
+    }
 
 }

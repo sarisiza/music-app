@@ -32,8 +32,6 @@ class ClassicFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        musicViewModel.updateCurrentTab(Genres.CLASSIC)
-
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -55,6 +53,10 @@ class ClassicFragment: BaseFragment() {
                     }
                 }
             }
+        }
+
+        binding.swipeContainer.setOnRefreshListener {
+            musicViewModel.getSongs(Genres.CLASSIC)
         }
 
         // Inflate the layout for this fragment
