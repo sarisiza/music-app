@@ -60,11 +60,11 @@ class RockFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onResume() {
+/*    override fun onResume() {
         super.onResume()
         if(!musicViewModel.fragmentState){
             musicViewModel.getSongs(Genres.ROCK)
         }
-    }
+    }*/
 
 }

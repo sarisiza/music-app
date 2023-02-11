@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MusicDAO {
 
-    @Query("SELECT * FROM song")
-    fun getSongs(): List<Song>
 
-    @Query("SELECT * FROM song WHERE genre LIKE genreName")
+    @Query("SELECT * FROM song WHERE genre = :genreName")
     fun getSongsByGenre(genreName: String): Flow<List<Song>>
+
+    @Query("SELECT COUNT(*) FROM song WHERE genre = :genreName")
+    fun getSongsSize(genreName: String): Flow<Int>
 
     @Insert(
         entity = Song::class,
         onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSongList(vararg songs: List<Song>)
+    suspend fun insertSong(vararg songs: Song)
 
 }

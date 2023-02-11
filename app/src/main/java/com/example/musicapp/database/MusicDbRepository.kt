@@ -13,10 +13,14 @@ class MusicDbRepository(
     val allPopSongs: Flow<List<Song>> = musicDAO.getSongsByGenre(Genres.POP.genre)
     val allClassicSongs: Flow<List<Song>> = musicDAO.getSongsByGenre(Genres.CLASSIC.genre)
 
+    val rockListSize: Flow<Int> = musicDAO.getSongsSize(Genres.ROCK.genre)
+    val popListSize: Flow<Int> = musicDAO.getSongsSize(Genres.POP.genre)
+    val classicListSize: Flow<Int> = musicDAO.getSongsSize(Genres.CLASSIC.genre)
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insertAllSongs(songsList: List<Song>){
-        musicDAO.insertSongList(songsList)
+    suspend fun insertSong(song: Song){
+        musicDAO.insertSong(song)
     }
 
 }

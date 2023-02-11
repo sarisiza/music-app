@@ -35,7 +35,7 @@ class MusicRepositoryImpl @Inject constructor(
                 response.body()?.let {response ->
                     val songsList: MutableList<Song> = mutableListOf()
                     response.songItems.forEach {
-                        songsList.add(it.mapToSong())
+                        songsList.add(it.mapToSong(genre.genre))
                     }
                     emit(UIState.SUCCESS(songsList))
                 } ?: throw NullSongsResponse()

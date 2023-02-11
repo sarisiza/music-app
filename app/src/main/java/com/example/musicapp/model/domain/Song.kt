@@ -1,5 +1,6 @@
 package com.example.musicapp.model.domain
 
+import android.provider.MediaStore.Audio.Genres
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,10 +21,11 @@ data class Song(
     val previewUrl: String = "",
     val releaseDate: String = "",
     @ColumnInfo("song_price")
-    val trackPrice: Double = 0.0
+    val trackPrice: Double = 0.0,
+    val genre: String = "rock"
 )
 
-fun SongItem?.mapToSong(): Song =
+fun SongItem?.mapToSong(genreName: String): Song =
     Song(
         trackId = this?.trackId ?: random().toInt(),
         trackName = this?.trackName ?: "",
@@ -32,6 +34,7 @@ fun SongItem?.mapToSong(): Song =
         collectionName = this?.collectionName ?: "",
         previewUrl = this?.previewUrl ?: "",
         releaseDate = this?.releaseDate ?: "",
-        trackPrice = this?.trackPrice ?: 0.0
+        trackPrice = this?.trackPrice ?: 0.0,
+        genre = genreName
     )
 
