@@ -27,10 +27,14 @@ class RockFragment : BaseFragment() {
         }
     }
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        swipeRefreshLayout = binding.swipeContainer
 
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
@@ -41,6 +45,27 @@ class RockFragment : BaseFragment() {
             adapter = songsAdapter
         }
 
+        updateList()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            musicViewModel.getSongs(Genres.ROCK)
+            updateList()
+        }
+
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!musicViewModel.fragmentState){
+            musicViewModel.getSongs(Genres.ROCK)
+            musicViewModel.updateSongsDatabaseById(Genres.ROCK)
+        }
+    }
+
+    private fun updateList(){
         musicViewModel.rockMusic.observe(viewLifecycleOwner){
             when(it){
                 is UIState.LOADING -> {}
@@ -53,20 +78,6 @@ class RockFragment : BaseFragment() {
                     }
                 }
             }
-        }
-
-        binding.swipeContainer.setOnRefreshListener {
-            musicViewModel.getSongs(Genres.ROCK)
-        }
-
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(!musicViewModel.fragmentState){
-            musicViewModel.getSongs(Genres.ROCK)
         }
     }
 

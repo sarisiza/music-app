@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.musicapp.R
 import com.example.musicapp.databinding.FragmentSongsListBinding
 import com.example.musicapp.utils.BaseFragment
@@ -26,11 +27,14 @@ class ClassicFragment: BaseFragment() {
         }
     }
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        swipeRefreshLayout = binding.swipeContainer
 
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
@@ -41,6 +45,27 @@ class ClassicFragment: BaseFragment() {
             adapter = songsAdapter
         }
 
+        updateList()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            musicViewModel.getSongs(Genres.CLASSIC)
+        }
+
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!musicViewModel.fragmentState){
+            musicViewModel.getSongs(Genres.CLASSIC)
+            musicViewModel.updateSongsDatabaseById(Genres.CLASSIC)
+            updateList()
+        }
+    }
+
+    private fun updateList(){
         musicViewModel.classicMusic.observe(viewLifecycleOwner){
             when(it){
                 is UIState.LOADING -> {}
@@ -53,20 +78,6 @@ class ClassicFragment: BaseFragment() {
                     }
                 }
             }
-        }
-
-        binding.swipeContainer.setOnRefreshListener {
-            musicViewModel.getSongs(Genres.CLASSIC)
-        }
-
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(!musicViewModel.fragmentState){
-            musicViewModel.getSongs(Genres.CLASSIC)
         }
     }
 

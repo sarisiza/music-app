@@ -6,6 +6,7 @@ import com.example.musicapp.database.MusicDbRepository
 import com.example.musicapp.model.domain.Song
 import com.example.musicapp.rest.MusicRepository
 import com.example.musicapp.utils.Genres
+import com.example.musicapp.utils.IncorrectQuery
 import com.example.musicapp.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -47,14 +48,6 @@ class MusicViewModel @Inject constructor(
     private var _itemSelected: MutableLiveData<Song> = MutableLiveData()
     val itemSelected: LiveData<Song> get() = _itemSelected
 
-    init {
-        getSongs(Genres.ROCK)
-        getSongs(Genres.POP)
-        getSongs(Genres.CLASSIC)
-        updateSongsDatabaseById(Genres.ROCK)
-        updateSongsDatabaseById(Genres.CLASSIC)
-        updateSongsDatabaseById(Genres.POP)
-    }
 
     fun getSongs(genre: Genres){
         if(songListIsEmpty(genre)) {
@@ -74,6 +67,31 @@ class MusicViewModel @Inject constructor(
                         musicRepository.getAllSongs(genre).collect { state ->
                             _classicMusic.postValue(state)
                         }
+                    }
+                }
+            }
+        } else{
+            Log.d(TAG, "getSongs: got to db")
+            when(genre){
+                Genres.ROCK -> {
+                    if(rockMusicList.value != null){
+                        _rockMusic.postValue(UIState.SUCCESS(rockMusicList.value as List<Song>))
+                    } else{
+                        _rockMusic.postValue(UIState.ERROR(IncorrectQuery()))
+                    }
+                }
+                Genres.POP -> {
+                    if(popMusicList.value != null){
+                        _popMusic.postValue(UIState.SUCCESS(popMusicList.value as List<Song>))
+                    } else{
+                        _popMusic.postValue(UIState.ERROR(IncorrectQuery()))
+                    }
+                }
+                Genres.CLASSIC -> {
+                    if(classicMusicList.value != null){
+                        _classicMusic.postValue(UIState.SUCCESS(classicMusicList.value as List<Song>))
+                    } else{
+                        _classicMusic.postValue(UIState.ERROR(IncorrectQuery()))
                     }
                 }
             }
