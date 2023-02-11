@@ -17,16 +17,22 @@ import com.example.musicapp.viewmodel.MusicViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Base fragment that inherits
+ * common configurations to each of the fragments
+ */
 private const val TAG = "BaseFragment"
 @AndroidEntryPoint
 open class BaseFragment: Fragment() {
 
-
+    //initiate the ViewModel
     protected val musicViewModel: MusicViewModel by lazy {
         ViewModelProvider(requireActivity())[MusicViewModel::class.java]
     }
 
-
+    /**
+     * Generates an error dialog
+     */
     protected fun showError(message: String, action: () -> Unit){
         AlertDialog.Builder(requireActivity())
             .setTitle("Error Occurred")
@@ -43,18 +49,30 @@ open class BaseFragment: Fragment() {
     }
 
 
+    /**
+     * Method to verify if there is a change in the configuration
+     */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        //update fragment state in case of configuration change
         musicViewModel.updateFragmentState(true)
     }
 
+    /**
+     * Method to verify if there is Network connection
+     */
     protected fun checkForInternet():Boolean{
-        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //instantiate a connectivity manager
+        val connectivityManager = requireContext().getSystemService(
+            Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //instantiate the active network
         val network = connectivityManager.activeNetwork ?: return false
-        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-        return when{
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        //verify which network is active
+        val activeNetwork = connectivityManager
+            .getNetworkCapabilities(network) ?: return false
+        return when{ //checks if the active network has transport
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true //wifi
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true //cellphone
             else -> false
         }
 

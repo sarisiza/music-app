@@ -13,33 +13,40 @@ import com.example.musicapp.view.fragments.pop.PopFragment
 import com.example.musicapp.view.fragments.rock.RockFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Main Activity if the app
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * Creating the binding for the activity_main layout
-     */
+    //binding to the UI
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    /**
+     * Overriding onCreate method
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //set the UI
         setContentView(binding.root)
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.frag_container) as NavHostFragment
+        //Add navigation
+        val navHost = supportFragmentManager
+            .findFragmentById(R.id.frag_container) as NavHostFragment
+        //Navigation between fragments
         setupActionBarWithNavController(navHost.navController)
+        //Setup navigation for bottom menu
         binding.bnvMenu.setupWithNavController(navHost.navController)
     }
 
     /**
      * Support Navigation Up
      */
-
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.frag_container).navigateUp()
     }
-
 
 }

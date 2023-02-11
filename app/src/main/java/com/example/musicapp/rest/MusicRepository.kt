@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+/**
+ * Repository for the network connection
+ */
 interface MusicRepository {
 
     /**
@@ -24,25 +27,25 @@ class MusicRepositoryImpl @Inject constructor(
 ): MusicRepository{
 
     /**
-     * Method to retrieve songs from the API
+     * Overrides method to retrieve songs from the API
      * This will also create the domain
      */
     override fun getAllSongs(genre: Genres): Flow<UIState> = flow {
         emit(UIState.LOADING)
         try{
-            val response = musicApi.getSongsList(genre.genre)
+            val response = musicApi.getSongsList(genre.genre) //get songs from the api
             if(response.isSuccessful){
                 response.body()?.let {response ->
-                    val songsList: MutableList<Song> = mutableListOf()
+                    val songsList: MutableList<Song> = mutableListOf() //save songs in a list
                     response.songItems.forEach {
-                        songsList.add(it.mapToSong(genre.genre))
+                        songsList.add(it.mapToSong(genre.genre)) //create table of songs
                     }
-                    emit(UIState.SUCCESS(songsList))
-                } ?: throw NullSongsResponse()
+                    emit(UIState.SUCCESS(songsList)) //emit list of songs to UIState
+                } ?: throw NullSongsResponse() //exception handling
             }
-            else throw FailureResponse(response.errorBody()?.string())
+            else throw FailureResponse(response.errorBody()?.string()) //exception handling
         }catch (e: Exception){
-            emit(UIState.ERROR(e))
+            emit(UIState.ERROR(e)) //emit error to UIState
         }
     }
 

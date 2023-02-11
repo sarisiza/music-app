@@ -8,6 +8,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
+/**
+ * Provides the repository for the network connection
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class RepositoryModule {

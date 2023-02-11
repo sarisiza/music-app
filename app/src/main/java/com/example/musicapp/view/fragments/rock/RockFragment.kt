@@ -1,11 +1,9 @@
 package com.example.musicapp.view.fragments.rock
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,13 +14,19 @@ import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.UIState
 import com.example.musicapp.view.adapters.ArtistsSongsAdapter
 
-private const val TAG = "RockFragment"
+/**
+ * Fragment that shows the list of rock songs
+ */
 class RockFragment : BaseFragment() {
 
+    //binding to the UI
     private val binding by lazy {
         FragmentSongsListBinding.inflate(layoutInflater)
     }
 
+    /**
+     * Creating the adapter for the RecyclerView
+     */
     private val songsAdapter by lazy {
         ArtistsSongsAdapter{
             musicViewModel.selectItem(it)
@@ -30,13 +34,21 @@ class RockFragment : BaseFragment() {
         }
     }
 
+    //variable to refresh the layout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    /**
+     * Overriding onStart method
+     * Resets the fragment state
+     */
     override fun onStart() {
         super.onStart()
         musicViewModel.updateFragmentState(false)
     }
 
+    /**
+     * Overriding onCreateView method
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +56,8 @@ class RockFragment : BaseFragment() {
 
         swipeRefreshLayout = binding.swipeContainer
 
+        //binding the RecyclerView
+        //Adding a LinearLayoutManager and the adapter
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -53,8 +67,10 @@ class RockFragment : BaseFragment() {
             adapter = songsAdapter
         }
 
+        //updates the list of songs
         updateList()
 
+        //swipe-up to refresh
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
             musicViewModel.getSongs(Genres.ROCK)
@@ -65,39 +81,45 @@ class RockFragment : BaseFragment() {
         return binding.root
     }
 
+    /**
+     * Overriding onResume method
+     */
     override fun onResume() {
         super.onResume()
         musicViewModel.fragmentState.observe(viewLifecycleOwner) {
-            if (it == false) {
-                if (!musicViewModel.songListIsEmpty(Genres.ROCK)) {
-                    musicViewModel.getSongs(Genres.ROCK)
-                } else if (checkForInternet()) {
-                    musicViewModel.getSongs(Genres.ROCK)
-                    musicViewModel.updateSongsDatabaseById(Genres.ROCK)
+            if (it == false) { //check the fragment state
+                if (!musicViewModel.songListIsEmpty(Genres.ROCK)) { //checks if database has data
+                    musicViewModel.getSongs(Genres.ROCK) //get songs from database
+                } else if (checkForInternet()) { //checks internet connectivity
+                    musicViewModel.getSongs(Genres.ROCK) //get songs from API
+                    musicViewModel.updateSongsDatabaseByGenre(Genres.ROCK) //update database
                 } else {
+                    //go to disconnection fragment
                     findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
                 }
             }
         }
     }
 
+    /**
+     * Method to update the songs list
+     */
     private fun updateList(){
-        if(checkForInternet() || !musicViewModel.songListIsEmpty(Genres.ROCK)) {
-            musicViewModel.rockMusic.observe(viewLifecycleOwner) {
-                when (it) {
-                    is UIState.LOADING -> {}
-                    is UIState.SUCCESS -> {
-                        songsAdapter.updateArtistsSongsList(it.response)
-                    }
-                    is UIState.ERROR -> {
-                        showError(it.error.localizedMessage) {
-                            musicViewModel.getSongs(Genres.ROCK)
-                        }
+        musicViewModel.rockMusic.observe(viewLifecycleOwner) {//observe the livedata
+            when (it) {
+                is UIState.LOADING -> {} //do nothing on loading state
+                is UIState.SUCCESS -> {
+                    songsAdapter.updateArtistsSongsList(it.response) //update lists on success
+                }
+                is UIState.ERROR -> { //handle error case
+                    if(checkForInternet() || !musicViewModel.songListIsEmpty(Genres.ROCK)) {
+                        musicViewModel.getSongs(Genres.ROCK) //retry call
+                    } else{
+                        //go to disconnect fragment
+                        findNavController().navigate(R.id.action_pop_list_to_disconnect_fragment)
                     }
                 }
             }
-        } else{
-            findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
         }
     }
 
