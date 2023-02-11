@@ -47,9 +47,6 @@ class MusicViewModel @Inject constructor(
     private var _itemSelected: MutableLiveData<Song> = MutableLiveData()
     val itemSelected: LiveData<Song> get() = _itemSelected
 
-    private var _currentTab: MutableLiveData<Genres> = MutableLiveData(Genres.ROCK)
-    val currentTab: LiveData<Genres> get() = _currentTab
-
     init {
         getSongs(Genres.ROCK)
         getSongs(Genres.POP)
@@ -83,7 +80,7 @@ class MusicViewModel @Inject constructor(
         }
     }
 
-    private fun updateSongsDatabaseById(genre: Genres){
+    fun updateSongsDatabaseById(genre: Genres){
         if(songListIsEmpty(genre)){
             viewModelScope.launch(ioDispatcher) {
                 when(genre){
@@ -158,10 +155,6 @@ class MusicViewModel @Inject constructor(
 
     fun selectItem(song: Song){
         _itemSelected.postValue(song)
-    }
-
-    fun updateCurrentTab(genre: Genres){
-        _currentTab.postValue(genre)
     }
 
 }

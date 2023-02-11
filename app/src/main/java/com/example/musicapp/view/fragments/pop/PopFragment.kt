@@ -31,8 +31,6 @@ class PopFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        musicViewModel.updateCurrentTab(Genres.POP)
-
         binding.rvSongsList.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -54,6 +52,10 @@ class PopFragment: BaseFragment() {
                     }
                 }
             }
+        }
+
+        binding.swipeContainer.setOnRefreshListener {
+            musicViewModel.getSongs(Genres.POP)
         }
 
         // Inflate the layout for this fragment
