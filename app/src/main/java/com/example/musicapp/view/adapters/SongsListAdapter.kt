@@ -9,18 +9,27 @@ import com.example.musicapp.model.SongItem
 import com.example.musicapp.model.domain.Song
 import com.squareup.picasso.Picasso
 
+/**
+ * Updates the Adapter and the View Holder for the songs list
+ */
 class SongsListAdapter(
     private val songsList: MutableList<Song> = mutableListOf(),
     private val onClickedSong: (Song) -> Unit
 ): RecyclerView.Adapter<SongsListViewHolder>() {
 
+    /**
+     * Updates the songs list
+     */
     fun updateSongs(newSongs: List<Song>){
         if(songsList != newSongs){
-            songsList.addAll(newSongs)
+            songsList.addAll(newSongs) //add songs list to adapter
         }
         notifyDataSetChanged()
     }
 
+    /**
+     * Creates the View Holder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongsListViewHolder {
         return SongsListViewHolder(
             SongViewBinding.inflate(
@@ -31,8 +40,14 @@ class SongsListAdapter(
         )
     }
 
+    /**
+     * Gets the size of the songs list
+     */
     override fun getItemCount() = songsList.size
 
+    /**
+     * Binds the UI to the ViewHolder
+     */
     override fun onBindViewHolder(holder: SongsListViewHolder, position: Int) {
         holder.songsBinding(songsList[position],onClickedSong)
     }
@@ -41,10 +56,14 @@ class SongsListAdapter(
 
 class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.ViewHolder(binding.root){
 
+    /**
+     * Definse the binding for the ViewHolder
+     */
     fun songsBinding(song: Song, onClickedSong: (Song) -> Unit){
         binding.tvSongName.text = song.trackName
         binding.tvArtistName.text = song.artistName
         binding.tvSongPrice.text = song.trackPrice.toString()
+        //calling to Picasso for image processing
         Picasso
             .get()
             .load(song.artworkUrl60)
@@ -53,6 +72,7 @@ class SongsListViewHolder(private val binding: SongViewBinding): RecyclerView.Vi
             .placeholder(R.drawable.ic_image_search_24)
             .error(R.drawable.ic_broken_image_24)
             .into(binding.ivSongCover)
+        //set a clickListener
         itemView.setOnClickListener {
             song.let(onClickedSong)
         }

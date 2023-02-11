@@ -14,12 +14,17 @@ import com.example.musicapp.utils.Genres
 
 class DisconnectedFragment : BaseFragment() {
 
+    //binding to the UI
     private val binding by lazy {
         FragmentDisconnectedBinding.inflate(layoutInflater)
     }
 
+    //variable to refresh the layout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    /**
+     * Override onCreateView
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,9 +32,11 @@ class DisconnectedFragment : BaseFragment() {
 
         swipeRefreshLayout = binding.swipeContainer
 
+        //swipe-up to refresh
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
-            if(checkForInternet()){
+            if(checkForInternet()){ //check internet connection
+                //go to rock fragment
                 findNavController().navigate(R.id.action_disconnect_fragment_to_rock_list)
             }
         }

@@ -15,6 +15,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * Provides the necessary elements for the Network connection
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
@@ -76,6 +79,9 @@ class NetworkModule {
         return retrofit.create(MusicApi::class.java)
     }
 
+    /**
+     * Method that provides the IO Dispatcher
+     */
     @Provides
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
