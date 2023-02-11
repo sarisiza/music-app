@@ -11,10 +11,16 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
+/**
+ * Dependency injection for database
+ */
 @Module
 @InstallIn(SingletonComponent::class)
-class ApplicationModule() {
+class DatabaseModule() {
 
+    /**
+     * Creates a single instance of the database
+     */
     @Provides
     fun providesMusicDatabase(
         @ApplicationContext context: Context
@@ -25,12 +31,18 @@ class ApplicationModule() {
             "music-db"
         ).build()
 
+    /**
+     * Provides the DAO of the database
+     */
     @Provides
     fun providesMusicDAO(
         musicDatabase: MusicDatabase
     ): MusicDAO =
         musicDatabase.getMusicDAO()
 
+    /**
+     * Provides the DB Repository
+     */
     @Provides
     fun providesMusicDBRepository(
         musicDAO: MusicDAO

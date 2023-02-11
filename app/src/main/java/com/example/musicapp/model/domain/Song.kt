@@ -7,6 +7,10 @@ import androidx.room.PrimaryKey
 import com.example.musicapp.model.SongItem
 import java.lang.Math.random
 
+/**
+ * Represents a Song
+ * This data class defines de database table
+ */
 @Entity
 data class Song(
     @PrimaryKey
@@ -25,6 +29,9 @@ data class Song(
     val genre: String = "rock"
 )
 
+/**
+ * Maps the JSON response to the Song object
+ */
 fun SongItem?.mapToSong(genreName: String): Song =
     Song(
         trackId = this?.trackId ?: random().toInt(),
