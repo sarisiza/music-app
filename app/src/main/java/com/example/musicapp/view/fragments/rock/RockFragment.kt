@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -60,24 +61,35 @@ class RockFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         if(!musicViewModel.fragmentState){
-            musicViewModel.getSongs(Genres.ROCK)
-            musicViewModel.updateSongsDatabaseById(Genres.ROCK)
+            if(!musicViewModel.songListIsEmpty(Genres.ROCK)){
+                musicViewModel.getSongs(Genres.ROCK)
+            } else if(checkForInternet()) {
+                musicViewModel.getSongs(Genres.ROCK)
+                musicViewModel.updateSongsDatabaseById(Genres.ROCK)
+            }
+            else{
+                findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
+            }
         }
     }
 
     private fun updateList(){
-        musicViewModel.rockMusic.observe(viewLifecycleOwner){
-            when(it){
-                is UIState.LOADING -> {}
-                is UIState.SUCCESS -> {
-                    songsAdapter.updateArtistsSongsList(it.response)
-                }
-                is UIState.ERROR -> {
-                    showError(it.error.localizedMessage){
-                        musicViewModel.getSongs(Genres.ROCK)
+        if(checkForInternet() || !musicViewModel.songListIsEmpty(Genres.ROCK)) {
+            musicViewModel.rockMusic.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UIState.LOADING -> {}
+                    is UIState.SUCCESS -> {
+                        songsAdapter.updateArtistsSongsList(it.response)
+                    }
+                    is UIState.ERROR -> {
+                        showError(it.error.localizedMessage) {
+                            musicViewModel.getSongs(Genres.ROCK)
+                        }
                     }
                 }
             }
+        } else{
+            findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
         }
     }
 

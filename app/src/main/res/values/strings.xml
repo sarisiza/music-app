@@ -11,4 +11,5 @@
     <string name="btn_title_rock">Rock</string>
     <string name="btn_title_classic">Classic</string>
     <string name="btn_title_pop">Pop</string>
+    <string name="tv_text_no_connection">You don\'t have connection</string>
 </resources>
