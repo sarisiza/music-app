@@ -30,6 +30,11 @@ class PopFragment: BaseFragment() {
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    override fun onStart() {
+        super.onStart()
+        musicViewModel.updateFragmentState(false)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,15 +65,16 @@ class PopFragment: BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!musicViewModel.fragmentState){
-            if(!musicViewModel.songListIsEmpty(Genres.POP)){
-                musicViewModel.getSongs(Genres.POP)
-            } else if(checkForInternet()) {
-                musicViewModel.getSongs(Genres.POP)
-                musicViewModel.updateSongsDatabaseById(Genres.POP)
-            }
-            else{
-                findNavController().navigate(R.id.action_pop_list_to_disconnect_fragment)
+        musicViewModel.fragmentState.observe(viewLifecycleOwner) {
+            if (it == false) {
+                if (!musicViewModel.songListIsEmpty(Genres.POP)) {
+                    musicViewModel.getSongs(Genres.POP)
+                } else if (checkForInternet()) {
+                    musicViewModel.getSongs(Genres.POP)
+                    musicViewModel.updateSongsDatabaseById(Genres.POP)
+                } else {
+                    findNavController().navigate(R.id.action_pop_list_to_disconnect_fragment)
+                }
             }
         }
     }

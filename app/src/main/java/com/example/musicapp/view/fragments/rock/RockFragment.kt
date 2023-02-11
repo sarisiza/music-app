@@ -1,6 +1,7 @@
 package com.example.musicapp.view.fragments.rock
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.musicapp.utils.Genres
 import com.example.musicapp.utils.UIState
 import com.example.musicapp.view.adapters.ArtistsSongsAdapter
 
+private const val TAG = "RockFragment"
 class RockFragment : BaseFragment() {
 
     private val binding by lazy {
@@ -29,6 +31,11 @@ class RockFragment : BaseFragment() {
     }
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
+    override fun onStart() {
+        super.onStart()
+        musicViewModel.updateFragmentState(false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,15 +67,16 @@ class RockFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!musicViewModel.fragmentState){
-            if(!musicViewModel.songListIsEmpty(Genres.ROCK)){
-                musicViewModel.getSongs(Genres.ROCK)
-            } else if(checkForInternet()) {
-                musicViewModel.getSongs(Genres.ROCK)
-                musicViewModel.updateSongsDatabaseById(Genres.ROCK)
-            }
-            else{
-                findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
+        musicViewModel.fragmentState.observe(viewLifecycleOwner) {
+            if (it == false) {
+                if (!musicViewModel.songListIsEmpty(Genres.ROCK)) {
+                    musicViewModel.getSongs(Genres.ROCK)
+                } else if (checkForInternet()) {
+                    musicViewModel.getSongs(Genres.ROCK)
+                    musicViewModel.updateSongsDatabaseById(Genres.ROCK)
+                } else {
+                    findNavController().navigate(R.id.action_rock_list_to_disconnect_fragment)
+                }
             }
         }
     }

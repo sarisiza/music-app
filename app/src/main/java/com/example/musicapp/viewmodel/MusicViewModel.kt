@@ -22,7 +22,8 @@ class MusicViewModel @Inject constructor(
     private val musicDbRepository: MusicDbRepository
 ): ViewModel() {
 
-    var fragmentState = false
+    private var _fragmentState: MutableLiveData<Boolean> = MutableLiveData(false)
+    val fragmentState: LiveData<Boolean> get() = _fragmentState
 
     private val _rockMusic: MutableLiveData<UIState> = MutableLiveData(UIState.LOADING)
     val rockMusic: LiveData<UIState> get() = _rockMusic
@@ -48,6 +49,9 @@ class MusicViewModel @Inject constructor(
     private var _itemSelected: MutableLiveData<Song> = MutableLiveData()
     val itemSelected: LiveData<Song> get() = _itemSelected
 
+    init {
+        updateFragmentState(false)
+    }
 
     fun getSongs(genre: Genres){
         if(songListIsEmpty(genre)) {
@@ -173,6 +177,10 @@ class MusicViewModel @Inject constructor(
 
     fun selectItem(song: Song){
         _itemSelected.postValue(song)
+    }
+
+    fun updateFragmentState(stateChange: Boolean){
+        _fragmentState.postValue(stateChange)
     }
 
 }

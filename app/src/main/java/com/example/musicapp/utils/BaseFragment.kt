@@ -2,6 +2,7 @@ package com.example.musicapp.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -41,24 +42,13 @@ open class BaseFragment: Fragment() {
             .show()
     }
 
-    /**
-     * Method to check orientation change
-     */
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        musicViewModel.fragmentState = true
-    }
 
-    /**
-     * Method to check orientation back
-     */
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        musicViewModel.fragmentState = false
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        musicViewModel.updateFragmentState(true)
     }
 
     protected fun checkForInternet():Boolean{
-        Log.d(TAG, "checkForInternet: got here")
         val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
