@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_rock_list_to_song_details"
             app:destination="@id/song_details" />
+        <action
+            android:id="@+id/action_rock_list_to_disconnect_fragment"
+            app:destination="@id/disconnect_fragment" />
     </fragment>
 
     <fragment
@@ -23,6 +26,9 @@
         <action
             android:id="@+id/action_classic_list_to_song_details"
             app:destination="@id/song_details" />
+        <action
+            android:id="@+id/action_classic_list_to_disconnect_fragment"
+            app:destination="@id/disconnect_fragment" />
     </fragment>
 
     <fragment
@@ -33,12 +39,29 @@
         <action
             android:id="@+id/action_pop_list_to_song_details"
             app:destination="@id/song_details" />
+        <action
+            android:id="@+id/action_pop_list_to_disconnect_fragment"
+            app:destination="@id/disconnect_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/song_details"
         android:name="com.example.musicapp.view.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details"
-        android:label="Song Details"/>
+        android:label="Song Details">
+        <action
+            android:id="@+id/action_song_details_to_disconnect_fragment"
+            app:destination="@id/disconnect_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/disconnect_fragment"
+        android:name="com.example.musicapp.view.fragments.DisconnectedFragment"
+        tools:layout="@layout/fragment_disconnected"
+        android:label="Disconnected">
+        <action
+            android:id="@+id/action_disconnect_fragment_to_rock_list"
+            app:destination="@id/rock_list" />
+    </fragment>
 
 </navigation>

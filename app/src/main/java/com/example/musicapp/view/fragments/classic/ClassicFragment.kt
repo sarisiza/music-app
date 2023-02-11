@@ -59,25 +59,35 @@ class ClassicFragment: BaseFragment() {
     override fun onResume() {
         super.onResume()
         if(!musicViewModel.fragmentState){
-            musicViewModel.getSongs(Genres.CLASSIC)
-            musicViewModel.updateSongsDatabaseById(Genres.CLASSIC)
-            updateList()
+            if(!musicViewModel.songListIsEmpty(Genres.CLASSIC)){
+                musicViewModel.getSongs(Genres.CLASSIC)
+            } else if(checkForInternet()) {
+                musicViewModel.getSongs(Genres.CLASSIC)
+                musicViewModel.updateSongsDatabaseById(Genres.CLASSIC)
+            }
+            else{
+                findNavController().navigate(R.id.action_classic_list_to_disconnect_fragment)
+            }
         }
     }
 
     private fun updateList(){
-        musicViewModel.classicMusic.observe(viewLifecycleOwner){
-            when(it){
-                is UIState.LOADING -> {}
-                is UIState.SUCCESS -> {
-                    songsAdapter.updateArtistsSongsList(it.response)
-                }
-                is UIState.ERROR -> {
-                    showError(it.error.localizedMessage){
-                        musicViewModel.getSongs(Genres.CLASSIC)
+        if(checkForInternet() || !musicViewModel.songListIsEmpty(Genres.POP)) {
+            musicViewModel.classicMusic.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UIState.LOADING -> {}
+                    is UIState.SUCCESS -> {
+                        songsAdapter.updateArtistsSongsList(it.response)
+                    }
+                    is UIState.ERROR -> {
+                        showError(it.error.localizedMessage) {
+                            musicViewModel.getSongs(Genres.CLASSIC)
+                        }
                     }
                 }
             }
+        }else{
+            findNavController().navigate(R.id.action_classic_list_to_disconnect_fragment)
         }
     }
 
